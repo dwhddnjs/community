@@ -2,8 +2,9 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { PostSchema } from "./schemas"
 import * as z from "zod"
-import Button from "@components/button"
+import { Button } from "@components/button"
 import { useAddPost } from "@hooks/mutation/post-mutation"
+import { useNavigate } from "react-router-dom"
 
 function New() {
   const {
@@ -17,7 +18,8 @@ function New() {
       content: "",
     },
   })
-  const { mutate } = useAddPost()
+  const { mutate, isPending } = useAddPost()
+  const navigate = useNavigate()
 
   const onSubmit = (data: z.infer<typeof PostSchema>) => {
     const requestBody = {
@@ -73,8 +75,15 @@ function New() {
           </div>
           <hr />
           <div className="flex justify-end my-6">
-            <Button type="submit">등록</Button>
-            <Button type="reset" bgColor="gray" onClick={() => history.back()}>
+            <Button type="submit" disabled={isPending}>
+              등록
+            </Button>
+            <Button
+              type="reset"
+              disabled={isPending}
+              bgColor="gray"
+              onClick={() => navigate("../")}
+            >
               취소
             </Button>
           </div>

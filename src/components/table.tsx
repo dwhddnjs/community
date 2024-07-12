@@ -1,4 +1,8 @@
-export const Table = ({ children }: { children: React.ReactNode }) => {
+interface TableProp {
+  children: React.ReactNode
+}
+
+export const Table = ({ children }: TableProp) => {
   return (
     <table className="border-collapse w-full table-fixed">
       <colgroup>

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { LoginSchema } from "./schemas"
-import Button from "@components/button"
+import { Button } from "@components/button"
 import { useLogin } from "@hooks/mutation/auth-mutation"
 
 export default function Login() {
@@ -18,7 +18,7 @@ export default function Login() {
       password: "",
     },
   })
-  const { mutate } = useLogin()
+  const { mutate, isPending } = useLogin()
   const navigate = useNavigate()
 
   const onSubmit = (data: z.infer<typeof LoginSchema>) => {
@@ -82,10 +82,14 @@ export default function Login() {
               </a>
             </div>
             <div className="mt-10 flex justify-center items-center">
-              <Button bgColor="orange" type="submit">
+              <Button bgColor="orange" type="submit" disabled={isPending}>
                 로그인
               </Button>
-              <Button bgColor="gray" onClick={() => navigate("/user/signup")}>
+              <Button
+                bgColor="gray"
+                disabled={isPending}
+                onClick={() => navigate("/user/signup")}
+              >
                 회원가입
               </Button>
             </div>

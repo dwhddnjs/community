@@ -7,7 +7,7 @@ import { CommentSchema } from "./schemas"
 import * as z from "zod"
 import { CommentType } from "types"
 import { useAddComment } from "@hooks/mutation/comment-mutation"
-import Button from "@components/button"
+import { Button } from "@components/button"
 
 interface CommentListProps {
   comments?: CommentType[]
@@ -26,7 +26,7 @@ const CommentList = ({ comments }: CommentListProps) => {
     },
   })
   const { _id } = useParams()
-  const { mutate } = useAddComment(_id)
+  const { mutate, isPending } = useAddComment(_id)
 
   const list = comments?.map((comment: CommentType) => (
     <CommentItem key={comment._id} comment={comment} />
@@ -67,7 +67,9 @@ const CommentList = ({ comments }: CommentListProps) => {
               </p>
             )}
           </div>
-          <Button type="submit">댓글 등록</Button>
+          <Button type="submit" disabled={isPending}>
+            댓글 등록
+          </Button>
         </form>
       </div>
     </section>

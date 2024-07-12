@@ -1,4 +1,4 @@
-import Button from "@components/button"
+import { Button } from "@components/button"
 import { Table } from "@components/table"
 import { TableCell } from "@components/table-cell"
 import { usePosts } from "@hooks/query/post-query"

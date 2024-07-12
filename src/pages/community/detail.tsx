@@ -3,12 +3,12 @@ import CommentList from "./comment-list"
 import { usePost } from "@hooks/query/post-query"
 import { useDeletePost } from "@hooks/mutation/post-mutation"
 import { useUser } from "@hooks/zustand/use-user"
-import Button from "@components/button"
+import { Button } from "@components/button"
 
 function Detail() {
   const { _id } = useParams()
   const { data } = usePost(_id)
-  const { mutate } = useDeletePost(_id)
+  const { mutate, isPending } = useDeletePost(_id)
   const { user } = useUser()
   const navigate = useNavigate()
 
@@ -32,12 +32,18 @@ function Detail() {
           <hr />
         </div>
         <div className="flex justify-end my-4">
-          <Button onClick={() => navigate(`/info/`)}>목록</Button>
-          <Button bgColor="gray" onClick={() => navigate(`/info/${_id}/edit`)}>
+          <Button onClick={() => navigate(`/info/`)} disabled={isPending}>
+            목록
+          </Button>
+          <Button
+            bgColor="gray"
+            disabled={isPending}
+            onClick={() => navigate(`/info/${_id}/edit`)}
+          >
             수정
           </Button>
           {data.item.user.name === user?.name && (
-            <Button bgColor="red" onClick={() => mutate()}>
+            <Button bgColor="red" disabled={isPending} onClick={() => mutate()}>
               삭제
             </Button>
           )}

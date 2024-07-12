@@ -4,7 +4,7 @@ interface ButtonProp extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   size?: "sm" | "md" | "lg"
 }
 
-const Button = ({
+export const Button = ({
   children,
   bgColor = "orange",
   size = "md",
@@ -30,5 +30,3 @@ const Button = ({
     </button>
   )
 }
-
-export default Button

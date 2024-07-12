@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { SignupSchema } from "./schemas"
-import Button from "@components/button"
+import { Button } from "@components/button"
 import { useNavigate } from "react-router-dom"
 import { useSignup } from "@hooks/mutation/auth-mutation"
 
@@ -23,7 +23,7 @@ const Signup = () => {
 
   const navigate = useNavigate()
   const [img, setImg] = useState<FileList | null>(null)
-  const { mutate } = useSignup()
+  const { mutate, isPending } = useSignup()
 
   const onChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     setImg(e.target.files)
@@ -129,9 +129,12 @@ const Signup = () => {
             </div>
 
             <div className="mt-10 flex justify-center items-center">
-              <Button type="submit">회원가입</Button>
+              <Button type="submit" disabled={isPending}>
+                회원가입
+              </Button>
               <Button
                 type="reset"
+                disabled={isPending}
                 bgColor="gray"
                 onClick={() => navigate("/user/login")}
               >

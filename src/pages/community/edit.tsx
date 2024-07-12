@@ -5,12 +5,12 @@ import { PostSchema } from "./schemas"
 import * as z from "zod"
 import { usePost } from "@hooks/query/post-query"
 import { useUpdatePost } from "@hooks/mutation/post-mutation"
-import Button from "@components/button"
+import { Button } from "@components/button"
 
 function Edit() {
   const { _id } = useParams()
   const { data } = usePost(_id)
-  const { mutate } = useUpdatePost(_id)
+  const { mutate, isPending } = useUpdatePost(_id)
   const navigate = useNavigate()
 
   const {
@@ -76,13 +76,15 @@ function Edit() {
           </div>
           <hr />
           <div className="flex justify-end my-6">
-            <Button
-              type="submit"
-              className="bg-orange-500 py-1 px-4 text-base text-white font-semibold ml-2 hover:bg-amber-400 rounded"
-            >
+            <Button type="submit" disabled={isPending}>
               수정
             </Button>
-            <Button type="reset" bgColor="gray" onClick={() => navigate("../")}>
+            <Button
+              type="reset"
+              disabled={isPending}
+              bgColor="gray"
+              onClick={() => navigate("../")}
+            >
               취소
             </Button>
           </div>

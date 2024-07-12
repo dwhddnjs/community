@@ -1,11 +1,13 @@
-import Button from "@components/button"
+import { Button } from "@components/button"
 import { useUser } from "@hooks/zustand/use-user"
 import { getImageUrl } from "@utils/function"
 import { removeLocalStorage } from "@utils/storage"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 export const Header = () => {
   const { isLogin, user, setUser, setLogin } = useUser()
+  const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
 
   const Logo = () => (
@@ -28,12 +30,14 @@ export const Header = () => {
   ))
 
   const onLogout = () => {
+    setIsLoading(true)
     if (isLogin) {
       removeLocalStorage("ACCESS_TOKEN")
       removeLocalStorage("REFRESH_TOKEN")
       setUser(null)
       setLogin(false)
       navigate("/")
+      setIsLoading(false)
     }
   }
 
@@ -56,17 +60,25 @@ export const Header = () => {
                 }
               />
               {user?.name}
-              <Button type="button" onClick={onLogout}>
+              <Button type="button" onClick={onLogout} disabled={isLoading}>
                 로그아웃
               </Button>
             </p>
           )}
           {!isLogin && (
             <div className="flex justify-end">
-              <Button onClick={() => navigate("/user/login")} color="orange">
+              <Button
+                onClick={() => navigate("/user/login")}
+                color="orange"
+                disabled={isLoading}
+              >
                 로그인
               </Button>
-              <Button bgColor="gray" onClick={() => navigate("/user/signup")}>
+              <Button
+                bgColor="gray"
+                onClick={() => navigate("/user/signup")}
+                disabled={isLoading}
+              >
                 회원가입
               </Button>
             </div>
@@ -75,7 +87,8 @@ export const Header = () => {
           <Button
             type="button"
             data-toggle-dark="dark"
-            className="ml-4 flex items-center w-8 h-8 justify-center text-xs font-medium text-gray-700 bg-white border border-gray-200 rounded-lg toggle-dark-state-example hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-500 dark:bg-gray-800 focus:outline-none dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+            bgColor="gray"
+            disabled={isLoading}
           >
             <svg
               data-toggle-icon="moon"
