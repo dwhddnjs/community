@@ -5,5 +5,13 @@ export function setLocalStorage(key: string, token: string) {
 }
 
 export function getLocalStorage(key: string) {
-  return localStorage.getItem(key)
+  if (key) {
+    return localStorage.getItem(key)
+  }
+}
+
+export function removeLocalStorage(key: string) {
+  if (key) {
+    return localStorage.removeItem(key)
+  }
 }

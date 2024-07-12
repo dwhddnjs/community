@@ -9,7 +9,7 @@ import { CommentType } from "types"
 import { useAddComment } from "@hooks/mutation/comment-mutation"
 
 interface CommentListProps {
-  comments: CommentType[]
+  comments?: CommentType[]
 }
 
 const CommentList = ({ comments }: CommentListProps) => {
@@ -27,7 +27,7 @@ const CommentList = ({ comments }: CommentListProps) => {
   const { _id } = useParams()
   const { mutate } = useAddComment(_id)
 
-  const list = comments?.map((comment: any) => (
+  const list = comments?.map((comment: CommentType) => (
     <CommentItem key={comment._id} comment={comment} />
   ))
 
@@ -35,7 +35,7 @@ const CommentList = ({ comments }: CommentListProps) => {
     const requestBody = {
       content: data.content,
     }
-    mutate(requestBody as any)
+    mutate(requestBody)
     reset({
       content: "",
     })

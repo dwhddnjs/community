@@ -31,7 +31,6 @@ const Signup = () => {
   }
 
   const onSubmit = async (data: z.infer<typeof SignupSchema>) => {
-    console.log("adsadsdasdasdsa")
     const formData = new FormData()
     if (img) {
       formData.append("attach", img[0])
@@ -40,7 +39,6 @@ const Signup = () => {
     try {
       const res = await postFormRequest("/files", formData)
       if (res) {
-        console.log("imageData: ", res.item[0])
         const request = {
           email: data.email,
           password: data.password,

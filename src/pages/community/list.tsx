@@ -1,15 +1,19 @@
+import Button from "@components/button"
 import { Table } from "@components/table"
 import { TableCell } from "@components/table-cell"
 import { usePosts } from "@hooks/query/post-query"
+import { useNavigate } from "react-router-dom"
+import { PostTypes } from "types"
 
 const List = () => {
   const { data } = usePosts()
+  const navigate = useNavigate()
 
   if (!data) {
     return null
   }
 
-  const tableCell = data.item?.map((item: any) => (
+  const tableCell = data.item?.map((item: PostTypes) => (
     <TableCell
       key={item._id}
       id={item._id}
@@ -41,21 +45,12 @@ const List = () => {
             type="text"
             name="keyword"
           />
-          <button
-            type="submit"
-            className="bg-orange-500 py-1 px-4 text-base text-white font-semibold ml-2 hover:bg-amber-400 rounded"
-          >
-            검색
-          </button>
+          <Button type="submit">검색</Button>
         </form>
 
-        <button
-          type="button"
-          className="bg-orange-500 py-1 px-4 text-base text-white font-semibold ml-2 hover:bg-amber-400 rounded"
-          onClick={() => (location.href = "/info/new")}
-        >
+        <Button bgColor="gray" onClick={() => navigate("/info/new")}>
           글작성
-        </button>
+        </Button>
       </div>
       <section className="pt-10">
         <Table>{tableCell}</Table>

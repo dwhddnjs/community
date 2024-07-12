@@ -1,10 +1,11 @@
 import Button from "@components/button"
 import { useUser } from "@hooks/zustand/use-user"
 import { getImageUrl } from "@utils/function"
+import { removeLocalStorage } from "@utils/storage"
 import { useNavigate } from "react-router-dom"
 
 export const Header = () => {
-  const { isLogin, user } = useUser()
+  const { isLogin, user, setUser, setLogin } = useUser()
   const navigate = useNavigate()
 
   const Logo = () => (
@@ -26,6 +27,16 @@ export const Header = () => {
     </li>
   ))
 
+  const onLogout = () => {
+    if (isLogin) {
+      removeLocalStorage("ACCESS_TOKEN")
+      removeLocalStorage("REFRESH_TOKEN")
+      setUser(null)
+      setLogin(false)
+      navigate("/")
+    }
+  }
+
   return (
     <header className="px-8 min-w-80 bg-slate-100 dark:bg-gray-600 text-gray-800 dark:text-gray-200 transition-color duration-500 ease-in-out">
       <nav className="flex flex-wrap justify-center items-center p-4 md:flex-nowrap md:justify-between">
@@ -40,12 +51,12 @@ export const Header = () => {
                 className="w-8 rounded-full mr-2"
                 src={
                   isLogin
-                    ? getImageUrl(user.img as string)
+                    ? getImageUrl(user?.img as string)
                     : "https://api.fesp.shop/files/00-sample/user-muzi.webp"
                 }
               />
-              {user.name}
-              <Button type="button" onClick={() => navigate("/")}>
+              {user?.name}
+              <Button type="button" onClick={onLogout}>
                 로그아웃
               </Button>
             </p>
@@ -55,7 +66,9 @@ export const Header = () => {
               <Button onClick={() => navigate("/user/login")} color="orange">
                 로그인
               </Button>
-              <Button onClick={() => navigate("/user/signup")}>회원가입</Button>
+              <Button bgColor="gray" onClick={() => navigate("/user/signup")}>
+                회원가입
+              </Button>
             </div>
           )}
 

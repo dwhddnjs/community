@@ -21,7 +21,8 @@ export type PostTypes = {
   _id: number
   content: string
   createdAt: string
-  repliesCount: number
+  repliesCount?: number
+  replies?: CommentType[]
   title: string
   type: string
   updatedAt: string
@@ -40,5 +41,5 @@ export type CommentType = {
 export type ResponseTypes<T> = {
   ok: number
   item: T
-  pagination: PaginationTypes
+  pagination?: PaginationTypes
 }
