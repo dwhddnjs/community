@@ -7,6 +7,7 @@ import { CommentSchema } from "./schemas"
 import * as z from "zod"
 import { CommentType } from "types"
 import { useAddComment } from "@hooks/mutation/comment-mutation"
+import Button from "@components/button"
 
 interface CommentListProps {
   comments?: CommentType[]
@@ -66,12 +67,7 @@ const CommentList = ({ comments }: CommentListProps) => {
               </p>
             )}
           </div>
-          <button
-            type="submit"
-            className="bg-orange-500 py-1 px-4 text-sm text-white font-semibold ml-2 hover:bg-amber-400 rounded"
-          >
-            댓글 등록
-          </button>
+          <Button type="submit">댓글 등록</Button>
         </form>
       </div>
     </section>

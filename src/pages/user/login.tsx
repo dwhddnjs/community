@@ -1,19 +1,16 @@
-import { postRequest } from "@utils/network"
-import { setLocalStorage } from "@utils/storage"
-import { useUser } from "@hooks/zustand/use-user"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { LoginSchema } from "./schemas"
 import Button from "@components/button"
+import { useLogin } from "@hooks/mutation/auth-mutation"
 
 export default function Login() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    // setError,
   } = useForm({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -21,29 +18,11 @@ export default function Login() {
       password: "",
     },
   })
-
-  const { setLogin, setUser } = useUser()
+  const { mutate } = useLogin()
   const navigate = useNavigate()
 
-  const onSubmit = async (data: z.infer<typeof LoginSchema>) => {
-    try {
-      const res = await postRequest("/users/login", { ...data })
-      if (res) {
-        setLocalStorage("ACCESS_TOKEN", res.item.token.accessToken)
-        setLocalStorage("REFRESH_TOKEN", res.item.token.refreshToken)
-        setLogin(true)
-        setUser({
-          id: res.item._id,
-          email: res.item.email,
-          name: res.item.name,
-          img: res.item.profileImage.path,
-          type: res.item.type,
-        })
-      }
-      navigate("/")
-    } catch (error) {
-      console.log(error)
-    }
+  const onSubmit = (data: z.infer<typeof LoginSchema>) => {
+    mutate(data)
   }
 
   return (

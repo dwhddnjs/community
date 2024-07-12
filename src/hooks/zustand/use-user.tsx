@@ -21,9 +21,7 @@ export const useUser = create(
     (set) => ({
       isLogin: false,
       user: null,
-
       setLogin: (value) => set({ isLogin: value }),
-
       setUser: (user) =>
         set({
           user: user,

@@ -1,5 +1,4 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-
 import { useForm } from "react-hook-form"
 import { PostSchema } from "./schemas"
 import * as z from "zod"
@@ -75,7 +74,7 @@ function New() {
           <hr />
           <div className="flex justify-end my-6">
             <Button type="submit">등록</Button>
-            <Button type="reset" onClick={() => history.back()}>
+            <Button type="reset" bgColor="gray" onClick={() => history.back()}>
               취소
             </Button>
           </div>

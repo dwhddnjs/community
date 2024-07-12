@@ -1,4 +1,3 @@
-import { postFormRequest, postRequest } from "@utils/network"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -6,14 +5,13 @@ import * as z from "zod"
 import { SignupSchema } from "./schemas"
 import Button from "@components/button"
 import { useNavigate } from "react-router-dom"
-// import { useNavigate } from "react-router-dom"
+import { useSignup } from "@hooks/mutation/auth-mutation"
 
 const Signup = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    // setError,
   } = useForm({
     resolver: zodResolver(SignupSchema),
     defaultValues: {
@@ -25,37 +23,18 @@ const Signup = () => {
 
   const navigate = useNavigate()
   const [img, setImg] = useState<FileList | null>(null)
+  const { mutate } = useSignup()
 
   const onChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     setImg(e.target.files)
   }
 
-  const onSubmit = async (data: z.infer<typeof SignupSchema>) => {
+  const onSubmit = (data: z.infer<typeof SignupSchema>) => {
     const formData = new FormData()
     if (img) {
       formData.append("attach", img[0])
     }
-
-    try {
-      const res = await postFormRequest("/files", formData)
-      if (res) {
-        const request = {
-          email: data.email,
-          password: data.password,
-          name: data.name,
-          type: "user",
-          profileImage: {
-            originalname: res.item[0]?.originalname,
-            name: res.item[0]?.name,
-            path: res.item[0]?.path,
-          },
-        }
-        await postRequest("/users", request)
-        navigate("/user/login")
-      }
-    } catch (error) {
-      console.log("error: ", error)
-    }
+    mutate({ ...data, formData })
   }
 
   return (

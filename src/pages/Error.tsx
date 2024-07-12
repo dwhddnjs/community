@@ -1,3 +1,4 @@
+import Button from "@components/button"
 import { Footer } from "@components/layout/footer"
 import { Header } from "@components/layout/header"
 
@@ -12,9 +13,7 @@ function Error() {
         <p className="text-center">
           이 오류는 더 나은 서비스를 위한 첫걸음이에요. 조금만 기다려 주세요!
         </p>
-        <button className="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-600">
-          ⚙️ 문제 해결하기
-        </button>
+        <Button>⚙️ 문제 해결하기</Button>
       </div>
       <Footer />
     </div>

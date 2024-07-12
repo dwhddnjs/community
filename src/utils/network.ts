@@ -1,8 +1,10 @@
 type BaseFetchParamTypes = {
   url: string
   method: string
-  data?: any
-  headers?: any
+  data?: string | FormData
+  headers?: {
+    [key: string]: string
+  }
 }
 
 const baseFetch = async ({
@@ -58,7 +60,7 @@ const fetcher = (url: string) => {
   })
 }
 
-const postRequest = (url: string, arg: any) => {
+const postRequest = <T>(url: string, arg: T) => {
   return baseFetch({
     url,
     method: "POST",
@@ -78,7 +80,7 @@ const postFormRequest = (url: string, arg: FormData) => {
   })
 }
 
-const patchRequest = (url: string, arg: any) => {
+const patchRequest = <T>(url: string, arg: T) => {
   return baseFetch({
     url,
     method: "PATCH",
@@ -89,7 +91,7 @@ const patchRequest = (url: string, arg: any) => {
   })
 }
 
-const putRequest = (url: string, arg: any) => {
+const putRequest = <T>(url: string, arg: T) => {
   return baseFetch({
     url,
     method: "PUT",

@@ -8,7 +8,7 @@ export type PaginationTypes = {
 export type UserTypes = {
   _id: number
   name: string
-  profile: {
+  profile?: {
     name: string
     originalname: string
     path: string
@@ -16,7 +16,9 @@ export type UserTypes = {
 }
 
 export type PostTypes = {
+  //잡다한거 넣고 싶으면
   extra: any
+  //안 팔아요
   seller_id: any
   _id: number
   content: string

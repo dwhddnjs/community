@@ -2,12 +2,21 @@ import Button from "@components/button"
 import { Table } from "@components/table"
 import { TableCell } from "@components/table-cell"
 import { usePosts } from "@hooks/query/post-query"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { PostTypes } from "types"
 
 const List = () => {
-  const { data } = usePosts()
+  const [page, setPage] = useState(1)
+
+  const { data } = usePosts(page)
+  console.log("data: ", data)
   const navigate = useNavigate()
+
+  const onAddPage = (e: React.MouseEvent<HTMLLIElement>) => {
+    e.preventDefault()
+    setPage((state) => state + 1)
+  }
 
   if (!data) {
     return null
@@ -24,6 +33,14 @@ const List = () => {
       createdAt={item.createdAt}
     />
   ))
+
+  const paginationBtn = Array.from({ length: 5 }, (_, i) => i + 1).map(
+    (value) => (
+      <li className="text-bold text-blue-700" onClick={onAddPage}>
+        <a href="/info?page=1">{value}</a>
+      </li>
+    )
+  )
 
   return (
     <main className="min-w-80 p-10">
@@ -58,14 +75,7 @@ const List = () => {
 
         {/* 페이지네이션 */}
         <div>
-          <ul className="flex justify-center gap-3 m-4">
-            <li className="text-bold text-blue-700">
-              <a href="/info?page=1">1</a>
-            </li>
-            <li>
-              <a href="/info?page=2">2</a>
-            </li>
-          </ul>
+          <ul className="flex justify-center gap-3 m-4">{paginationBtn}</ul>
         </div>
       </section>
     </main>
