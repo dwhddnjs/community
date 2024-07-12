@@ -1,4 +1,5 @@
 import { Button } from "@components/button"
+import { Search } from "@components/search"
 import { Table } from "@components/table"
 import { TableCell } from "@components/table-cell"
 import { usePosts } from "@hooks/query/post-query"
@@ -7,15 +8,35 @@ import { useNavigate } from "react-router-dom"
 import { PostTypes } from "types"
 
 const List = () => {
-  const [page, setPage] = useState(1)
+  const [params, setParams] = useState({
+    page: 1,
+    keyword: "",
+    limit: 10,
+  })
 
-  const { data } = usePosts(page)
-  console.log("data: ", data)
+  const { data, refetch } = usePosts(params)
   const navigate = useNavigate()
 
-  const onAddPage = (e: React.MouseEvent<HTMLLIElement>) => {
+  const onAddPage = (e: React.MouseEvent<HTMLLIElement>, value: number) => {
     e.preventDefault()
-    setPage((state) => state + 1)
+    setParams((state) => ({
+      ...state,
+      page: value,
+    }))
+  }
+
+  const onChangeKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setParams({
+      ...params,
+      keyword: e.target.value,
+    })
+  }
+  const onResetKeyword = () => {
+    setParams({
+      page: 1,
+      keyword: "",
+      limit: 10,
+    })
   }
 
   if (!data) {
@@ -36,8 +57,11 @@ const List = () => {
 
   const paginationBtn = Array.from({ length: 5 }, (_, i) => i + 1).map(
     (value) => (
-      <li className="text-bold text-blue-700" onClick={onAddPage}>
-        <a href="/info?page=1">{value}</a>
+      <li
+        className="text-bold text-blue-700"
+        onClick={(e) => onAddPage(e, value)}
+      >
+        <a href="/info">{value}</a>
       </li>
     )
   )
@@ -50,21 +74,12 @@ const List = () => {
         </h2>
       </div>
       <div className="flex justify-end mr-4">
-        {/* 검색 */}
-        <form
-          onSubmit={(event) => {
-            event.preventDefault()
-            location.href = ""
-          }}
-        >
-          <input
-            className="dark:bg-gray-600 bg-gray-100 p-1 rounded"
-            type="text"
-            name="keyword"
-          />
-          <Button type="submit">검색</Button>
-        </form>
-
+        <Search
+          onChangeKeyword={onChangeKeyword}
+          keyword={params.keyword}
+          refetch={refetch}
+          onResetKeyword={onResetKeyword}
+        />
         <Button bgColor="gray" onClick={() => navigate("/info/new")}>
           글작성
         </Button>
@@ -72,8 +87,6 @@ const List = () => {
       <section className="pt-10">
         <Table>{tableCell}</Table>
         <hr />
-
-        {/* 페이지네이션 */}
         <div>
           <ul className="flex justify-center gap-3 m-4">{paginationBtn}</ul>
         </div>

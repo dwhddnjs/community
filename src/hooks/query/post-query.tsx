@@ -1,11 +1,23 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query"
 import { fetcher } from "@utils/network"
+import { PaginationTypes } from "types"
 
-const usePosts = (page: number) => {
-  const { data, isPending, error } = useQuery({
-    queryKey: ["posts", page],
-    queryFn: async () =>
-      await fetcher(`/posts?type=jongwon&page=${page}&limit=10`),
+const usePosts = (
+  params: Pick<PaginationTypes, "page" | "limit"> & { keyword: string }
+) => {
+  const { data, isPending, error, refetch } = useQuery({
+    queryKey: ["posts", params.page],
+    queryFn: async () => {
+      if (params.keyword !== "") {
+        return await fetcher(
+          `/posts?keyword=${params.keyword}&type=jongwon&page=${params.page}&limit=${params.limit}`
+        )
+      } else {
+        return await fetcher(
+          `/posts?type=jongwon&page=${params.page}&limit=${params.limit}`
+        )
+      }
+    },
     placeholderData: keepPreviousData,
   })
 
@@ -13,6 +25,7 @@ const usePosts = (page: number) => {
     data,
     isPending,
     error,
+    refetch,
   }
 }
 
