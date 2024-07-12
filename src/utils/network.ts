@@ -46,7 +46,11 @@ const baseFetch = async ({
     const res = await fetch(apiUrl, request)
     return await res.json()
   } catch (error) {
-    console.log(error)
+    if (error instanceof TypeError) {
+      console.error("네트워크 에러", error.message)
+    } else if (error instanceof Error) {
+      console.error(error.message)
+    }
   }
 }
 
