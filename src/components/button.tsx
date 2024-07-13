@@ -1,7 +1,7 @@
 interface ButtonProp extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode
   bgColor?: "orange" | "gray" | "red"
-  size?: "sm" | "md" | "lg"
+  size?: "sm" | "md" | "lg" | "icon"
 }
 
 export const Button = ({
@@ -19,6 +19,7 @@ export const Button = ({
     sm: "py-1 px-2 text-sm",
     md: "py-1 px-4 text-base",
     lg: "py-2 px-6 text-lg",
+    icon: "py-2.5 px-2.5 text-base",
   }
 
   return (

@@ -48,7 +48,6 @@ const CommentList = ({ comments }: CommentListProps) => {
         댓글 {comments ? comments.length : "0"} 개
       </h4>
       {list}
-
       <div className="p-4 border border-gray-200 rounded-lg">
         <h4 className="mb-4">새로운 댓글을 추가하세요.</h4>
         <form onSubmit={handleSubmit(onSubmit)}>
