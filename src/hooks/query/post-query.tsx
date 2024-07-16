@@ -1,10 +1,15 @@
-import { keepPreviousData, useQuery } from "@tanstack/react-query"
+import {
+  keepPreviousData,
+  useQuery,
+  //   useSuspenseQuery,
+} from "@tanstack/react-query"
 import { fetcher } from "@utils/network"
 import { PaginationTypes } from "types"
 
 const usePosts = (
   params: Pick<PaginationTypes, "page" | "limit"> & { keyword: string }
 ) => {
+  // const { data, isPending, error, refetch } = useSuspenseQuery({
   const { data, isPending, error, refetch } = useQuery({
     queryKey: ["posts", params.page],
     queryFn: async () => {
@@ -12,13 +17,13 @@ const usePosts = (
         return await fetcher(
           `/posts?keyword=${params.keyword}&type=jongwon&page=${params.page}&limit=${params.limit}`
         )
-      } else {
-        return await fetcher(
-          `/posts?type=jongwon&page=${params.page}&limit=${params.limit}`
-        )
       }
+      return await fetcher(
+        `/posts?type=jongwon&page=${params.page}&limit=${params.limit}&delay=3000`
+      )
     },
     placeholderData: keepPreviousData,
+    staleTime: 1000 * 3,
   })
 
   return {

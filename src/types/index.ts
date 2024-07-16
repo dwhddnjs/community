@@ -8,11 +8,13 @@ export type PaginationTypes = {
 export type UserTypes = {
   _id: number
   name: string
-  profile?: {
-    name: string
-    originalname: string
-    path: string
-  }
+  profile?: ProfileTypes
+}
+
+export type ProfileTypes = {
+  name: string
+  originalname: string
+  path: string
 }
 
 export type PostTypes = {
@@ -44,4 +46,17 @@ export type ResponseTypes<T> = {
   ok: number
   item: T
   pagination?: PaginationTypes
+}
+
+export type Login = {
+  createdAt: string
+  email: string
+  name: string
+  profileImage: ProfileTypes
+  token: {
+    accessToken: string
+    refreshToken: string
+  }
+  updatedAt: string
+  _id: number
 }

@@ -4,6 +4,7 @@ import { useMutation } from "@tanstack/react-query"
 import { postFormRequest, postRequest } from "@utils/network"
 import { setLocalStorage } from "@utils/storage"
 import { useNavigate } from "react-router-dom"
+import { Login, ResponseTypes } from "types"
 import * as z from "zod"
 
 const useLogin = () => {
@@ -39,6 +40,7 @@ const useSignup = () => {
       data: z.infer<typeof SignupSchema> & { formData: FormData }
     ) => {
       const res = await postFormRequest("/files", data.formData)
+
       const request = {
         email: data.email,
         password: data.password,
@@ -52,7 +54,14 @@ const useSignup = () => {
       }
       await postRequest("/users", request)
     },
-    onSuccess: () => navigate("/user/login"),
+    onSuccess: (res: ResponseTypes<Login>) => {
+      console.log("res: ", res)
+      //   if (res.ok) {
+      //     alert(`${res.item.name}님 회원가입을 환영합니다`)
+      //     navigate("/")
+      //   }
+      //   navigate("/user/login")
+    },
     onError: (error) => console.log(error),
   })
   return { mutate, isPending, isError }
