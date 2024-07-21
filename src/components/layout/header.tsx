@@ -4,7 +4,7 @@ import { useUser } from "@hooks/zustand/use-user"
 import { getImageUrl } from "@utils/function"
 import { removeLocalStorage } from "@utils/storage"
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 export const Header = () => {
   const { isLogin, user, setUser, setLogin } = useUser()
@@ -13,20 +13,20 @@ export const Header = () => {
 
   const Logo = () => (
     <div className="w-1/2 order-1 md:w-auto">
-      <a href="/" className="flex items-center gap-2">
+      <Link to="/" className="flex items-center gap-2">
         <img
           className="mr-3 h-6 sm:h-9"
           src="/images/favicon.svg"
           alt="로고 이미지"
         />
         <span className="text-lg font-bold">멋사컴</span>
-      </a>
+      </Link>
     </div>
   )
 
   const path = ["정보공유", "자유게시판", "질문게시판"].map((path) => (
     <li className="hover:text-amber-500 hover:font-semibold" key={path}>
-      <a href="/info">{path}</a>
+      <Link to="/info">{path}</Link>
     </li>
   ))
 

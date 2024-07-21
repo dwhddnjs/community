@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 const Community = () => {
   const cardItems = [
     { title: "주요기능", description: "정보공유", url: "/info" },
@@ -18,9 +20,9 @@ const Community = () => {
     >
       <h3 className="text-xl font-bold mb-2">{card.title}</h3>
       <p className="mb-4">{card.description}</p>
-      <a href={card.url} className="text-orange-500 hover:underline">
+      <Link to={card.url} className="text-orange-500 hover:underline">
         바로가기
-      </a>
+      </Link>
     </div>
   ))
 
@@ -34,12 +36,12 @@ const Community = () => {
           다양한 주제의 커뮤니티와 활발한 소통을 위한 플랫폼입니다. 관심사에
           따라 참여하고, 의견을 나누세요.
         </p>
-        <a
-          href="/"
+        <Link
+          to="/"
           className="bg-orange-500 text-white px-6 py-3 rounded hover:bg-orange-600"
         >
           커뮤니티 참여하기
-        </a>
+        </Link>
       </section>
 
       <section className="mt-16">

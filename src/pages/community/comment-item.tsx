@@ -1,7 +1,7 @@
 import { useDeleteComment } from "@hooks/mutation/comment-mutation"
 import { useUser } from "@hooks/zustand/use-user"
 import { getImageUrl } from "@utils/function"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { CommentType } from "types"
 
 interface CommentItemProps {
@@ -30,9 +30,9 @@ export const CommentItem = ({ comment }: CommentItemProps) => {
           }
           alt=""
         />
-        <a href="" className="text-orange-400">
+        <Link to="" className="text-orange-400">
           {comment?.user?.name}
-        </a>
+        </Link>
         <time className="ml-auto text-gray-500" dateTime="2024.07.02 14:11:22">
           {comment?.createdAt}
         </time>

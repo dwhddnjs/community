@@ -1,5 +1,5 @@
 import { useUser } from "@hooks/zustand/use-user"
-import { LoginSchema, SignupSchema } from "@pages/user/schemas"
+import { LoginSchema } from "@pages/user/schemas"
 import { useMutation } from "@tanstack/react-query"
 import { postFormRequest, postRequest } from "@utils/network"
 import { setLocalStorage } from "@utils/storage"
@@ -34,11 +34,9 @@ const useLogin = () => {
 }
 
 const useSignup = () => {
-  const navigate = useNavigate()
-  const { mutate, isPending, isError } = useMutation({
-    mutationFn: async (
-      data: z.infer<typeof SignupSchema> & { formData: FormData }
-    ) => {
+  //   const navigate = useNavigate()
+  const { mutate, isPending, isError } = useMutation<any>({
+    mutationFn: async (data: any) => {
       const res = await postFormRequest("/files", data.formData)
 
       const request = {

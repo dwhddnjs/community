@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { LoginSchema } from "./schemas"
@@ -74,12 +74,12 @@ export default function Login() {
                   {errors.password.message}
                 </p>
               )}
-              <a
-                href="#"
+              <Link
+                to="#"
                 className="block mt-6 ml-auto text-gray-500 text-sm dark:text-gray-300 hover:underline"
               >
                 비밀번호를 잊으셨나요?
-              </a>
+              </Link>
             </div>
             <div className="mt-10 flex justify-center items-center">
               <Button bgColor="orange" type="submit" disabled={isPending}>

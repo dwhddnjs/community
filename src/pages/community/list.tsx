@@ -4,7 +4,7 @@ import { Table } from "@components/table"
 import { TableCell } from "@components/table-cell"
 import { usePosts } from "@hooks/query/post-query"
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { PostTypes } from "types"
 
 const List = () => {
@@ -61,7 +61,7 @@ const List = () => {
         className="text-bold text-blue-700"
         onClick={(e) => onAddPage(e, value)}
       >
-        <a href="/info">{value}</a>
+        <Link to="/info">{value}</Link>
       </li>
     )
   )

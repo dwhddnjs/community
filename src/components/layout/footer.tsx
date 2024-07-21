@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 export const Footer = () => {
   const items = [
     "약관",
@@ -11,13 +13,13 @@ export const Footer = () => {
     "청소년보호 정책",
     "고객센터",
   ].map((item) => (
-    <a
-      href="#"
+    <Link
+      to="#"
       className="hover:font-semibold dark:hover:text-gray-200"
       key={item}
     >
       {item}
-    </a>
+    </Link>
   ))
 
   return (
